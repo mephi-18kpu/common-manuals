@@ -32,14 +32,14 @@ git restore path/to/file
 Если коммит ещё не создан, сначала попробуйте переключиться в нужную ветку:
 
 ```bash
-git switch student/b24-601/student-07/lab-01
+git switch student-submission/lab-01/b24-601/student-07
 ```
 
 Если Git не разрешает переключение из-за локальных изменений, временно сохраните их:
 
 ```bash
 git stash push -u -m "Временное сохранение перед сменой ветки"
-git switch student/b24-601/student-07/lab-01
+git switch student-submission/lab-01/b24-601/student-07
 git stash pop
 git status
 ```
@@ -65,14 +65,15 @@ git branch backup/master-before-reset
 Если рабочая ветка задания уже существует, перенесите нужный коммит в неё:
 
 ```bash
-git switch student/b24-601/student-07/lab-01
+git switch student-submission/lab-01/b24-601/student-07
 git cherry-pick COMMIT_ID
 ```
 
-Если рабочая ветка ещё не существует, не создавайте её из локальной `master`. Узнайте у преподавателя исходный commit задания, создайте от него рабочую ветку и перенесите ошибочный коммит:
+Если ветка отчётной работы ещё не существует на GitHub, не создавайте её из локальной `master`. Обратитесь к преподавателю: он или администратор должен создать ветку от сохранённого исходного commit задания. После появления ветки подключите её и перенесите ошибочный коммит:
 
 ```bash
-git switch --no-track -c student/b24-601/student-07/lab-01 SUBMISSION_BASE_COMMIT
+git fetch origin
+git switch --track origin/student-submission/lab-01/b24-601/student-07
 git cherry-pick COMMIT_ID
 ```
 
@@ -95,14 +96,14 @@ git status
 
 ```bash
 git fetch origin
-git switch --track origin/student/b24-601/student-07/lab-01
+git switch --track origin/student-submission/lab-01/b24-601/student-07
 ```
 
 Если локальная ветка с таким именем также существует:
 
 ```bash
-git switch student/b24-601/student-07/lab-01
-git pull --ff-only origin student/b24-601/student-07/lab-01
+git switch student-submission/lab-01/b24-601/student-07
+git pull --ff-only
 ```
 
 ## `git push` отклонён как non-fast-forward
@@ -111,7 +112,7 @@ git pull --ff-only origin student/b24-601/student-07/lab-01
 
 ```bash
 git branch --show-current
-git pull --rebase origin student/b24-601/student-07/lab-01
+git pull --rebase origin student-submission/lab-01/b24-601/student-07
 git push
 ```
 
@@ -195,6 +196,7 @@ git remote -v
 - безопасный способ исправления не понятен;
 - после `merge`, `rebase` или `stash pop` остались конфликты;
 - Git сообщает об отсутствии прав доступа;
+- выданная ветка `student-submission/**/*` отсутствует на GitHub;
 - обнаружены чужие изменения.
 
 Сообщите название репозитория, свою ветку, номер рабочего компьютера, выполненную команду и полный текст ошибки. Пароли, ключи и токены сообщать нельзя.
